@@ -1,19 +1,20 @@
 #include <iostream>
+#include <gmpxx.h>
 
-unsigned long collatz(unsigned long n) {
-    unsigned long result;
-    if (n & 1) {//Odd
-        result = (3 * n) + 1;
-    } else {//Even
-        result = n / 2;
+mpz_class collatz(mpz_class n) {
+    if (mpz_odd_p(n.get_mpz_t())) {
+        n *= 3;
+        n += 1;
+    } else {
+        n /= 2;
     }
-    return result;
+    return n;
 }
 
 int main() {
-    unsigned long x = 8954309234986730960;
+    mpz_class x = 27;
     while (true) {
-        std::cout << x << std::endl;
+        std::cout << x.get_str(10) << std::endl;
         if (x == 1) break;
         x = collatz(x);
     }
